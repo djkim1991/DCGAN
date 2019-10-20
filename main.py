@@ -1,5 +1,3 @@
-import numpy as np
-
 import torch
 import torch.nn as nn
 from torch.optim import Adam
@@ -19,10 +17,13 @@ generator = Generator()
 dataLoader = MNIST()
 train_loader, test_loader = dataLoader.train_loader, dataLoader.test_loader
 
+# optimizer
 D_optimizer = Adam(params=discriminator.parameters(), lr=0.001)
 G_optimizer = Adam(params=generator.parameters(), lr=0.001)
-D_loss_function = nn.BCELoss()
-G_loss_function = nn.BCELoss()
+
+# loss function
+D_loss_function = nn.BCELoss()  # Binary Cross Entropy loss
+G_loss_function = nn.BCELoss()  # Binary Cross Entropy loss
 
 imageUtil = ImageUtil()
 
@@ -47,7 +48,9 @@ for epoch in range(epoch_size):
 
         # for make Fake data
         noise_size = 100
-        z = torch.randn(batch_size, noise_size)
+
+        z = Variable(torch.randn((batch_size, noise_size, 1, 1)))
+        # z = torch.FloatTensor(batch_size, noise_size, 1, 1)
 
         if torch.cuda.is_available():
             z = z.cuda()
@@ -76,7 +79,8 @@ for epoch in range(epoch_size):
             # Training G based on D's decision
             G_optimizer.zero_grad()
 
-            z = torch.randn(batch_size, noise_size)
+            z = Variable(torch.randn((batch_size, noise_size, 1, 1)))
+            # z = torch.FloatTensor(batch_size, noise_size, 1, 1)
 
             if torch.cuda.is_available():
                 z = z.cuda()
@@ -93,5 +97,4 @@ for epoch in range(epoch_size):
                 imageUtil.save(fake_data)
 
             G_loss.backward()
-
             G_optimizer.step()

@@ -13,7 +13,9 @@ class MNIST:
 
     def load_data(self):
         transform = transforms.Compose([
-            transforms.ToTensor()
+            transforms.Scale(28),
+            transforms.ToTensor(),
+            # transforms.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5))
         ])
 
         train_set = torchvision.datasets.MNIST(
