@@ -1,7 +1,3 @@
-'''
-    writer: dororongju
-    github: https://github.com/djkim1991/DCGAN/issues/1
-'''
 from torch.utils.data import Dataset, DataLoader
 import torchvision
 import torchvision.transforms as transforms
@@ -15,7 +11,6 @@ class MNIST:
         transform = transforms.Compose([
             transforms.Scale(28),
             transforms.ToTensor(),
-            # transforms.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5))
         ])
 
         train_set = torchvision.datasets.MNIST(

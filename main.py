@@ -50,7 +50,6 @@ for epoch in range(epoch_size):
         noise_size = 100
 
         z = Variable(torch.randn((batch_size, noise_size, 1, 1)))
-        # z = torch.FloatTensor(batch_size, noise_size, 1, 1)
 
         if torch.cuda.is_available():
             z = z.cuda()
@@ -71,8 +70,8 @@ for epoch in range(epoch_size):
             D_loss = D_real_loss + D_fake_loss
             if i % 10 == 0:
                 print('{0}: D_loss is {1}'.format(i, D_loss))
-            D_loss.backward()
 
+            D_loss.backward()
             D_optimizer.step()
 
         if i % 1 == 0:
@@ -80,7 +79,6 @@ for epoch in range(epoch_size):
             G_optimizer.zero_grad()
 
             z = Variable(torch.randn((batch_size, noise_size, 1, 1)))
-            # z = torch.FloatTensor(batch_size, noise_size, 1, 1)
 
             if torch.cuda.is_available():
                 z = z.cuda()
